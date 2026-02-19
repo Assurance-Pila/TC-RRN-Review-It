@@ -1,0 +1,23 @@
+.vendor-card {
+  @apply bg-white rounded-xl shadow-md p-5;
+}
+
+.vendor-header {
+  @apply flex items-center gap-2;
+}
+
+.vendor-name {
+  @apply text-lg font-semibold;
+}
+
+.vendor-handle {
+  @apply text-gray-500;
+}
+
+.vendor-rating {
+  @apply mt-2;
+}
+
+.vendor-button {
+  @apply mt-4 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg;
+}

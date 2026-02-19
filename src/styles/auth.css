@@ -1,0 +1,65 @@
+/* Layout */
+.auth-container {
+  @apply min-h-screen flex items-center justify-center bg-gray-200;
+}
+
+.auth-card {
+  @apply bg-white p-6 rounded-2xl shadow-md w-80;
+}
+
+.auth-title {
+  @apply text-2xl font-bold text-center mb-6;
+}
+
+/* Input */
+.input-group {
+  @apply mb-4;
+}
+
+.input-label {
+  @apply block mb-1 text-sm font-medium;
+}
+
+.input-field {
+  @apply w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600;
+}
+
+.password-toggle {
+  @apply absolute right-3 top-3 cursor-pointer text-gray-500;
+}
+
+/* Button */
+.primary-btn {
+  @apply w-full bg-green-700 text-white py-2 rounded-full hover:bg-green-800 transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+}
+
+.google-btn {
+  @apply w-full border py-2 px-4 rounded-full mt-4 flex items-center justify-center gap-1 hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2;
+}
+
+/* Utility */
+.link-text {
+  @apply text-blue-600 cursor-pointer;
+}
+
+.center-text {
+  @apply text-center text-sm mt-4;
+}
+
+.small-muted {
+  @apply text-center text-gray-500 my-4;
+}
+
+.row {
+  @apply flex gap-3;
+}
+
+.half {
+  @apply w-1/2;
+}.role-select {
+  @apply w-full p-2 border rounded-md mt-4 mb-4;
+}
+
+.google-icon {
+  @apply text-red-500 font-bold mr-2;
+}

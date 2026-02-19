@@ -1,0 +1,7 @@
+.badge-blue {
+  @apply w-5 h-5 flex items-center justify-center rounded-full bg-blue-500 text-white text-xs;
+}
+
+.badge-green {
+  @apply w-5 h-5 flex items-center justify-center rounded-full bg-green-600 text-white text-xs;
+}
