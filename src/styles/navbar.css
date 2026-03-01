@@ -1,0 +1,127 @@
+/* ================= NAVBAR ================= */
+.navbar {
+  height: 60px;
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(195, 234, 214, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 109, 91, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ================= LEFT ================= */
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.logo { height: 34px; object-fit: contain; }
+.brand-text { font-size: 17px; font-weight: 600; color: #006D5B; }
+
+/* ================= LINKS ================= */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-right a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #006D5B;
+  transition: 0.2s ease;
+}
+
+.nav-right a:hover { color: #419784; }
+
+/* ================= BUTTONS ================= */
+.nav-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  border: 1.5px solid #006D5B;
+  background: transparent;
+  color: #006D5B;
+}
+
+.nav-btn:hover { background: rgba(0, 109, 91, 0.08); }
+
+
+
+
+/* ================= HAMBURGER ================= */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1001;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #006D5B;
+  border-radius: 2px;
+  transition: 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .navbar { padding: 0 20px; position: relative; }
+
+  .nav-hamburger { display: flex; }
+
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(240, 250, 246, 0.98);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 109, 91, 0.15);
+    padding: 12px 20px 20px;
+    z-index: 1000;
+  }
+
+  .nav-right.nav-open { display: flex; }
+
+  .nav-right a {
+    padding: 12px 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 109, 91, 0.08);
+    font-size: 15px;
+  }
+
+  .nav-btn {
+    width: 100%;
+    margin-top: 8px;
+    text-align: center;
+    padding: 11px 18px;
+    justify-content: center;
+  }
+}

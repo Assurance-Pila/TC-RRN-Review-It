@@ -85,8 +85,15 @@ const Login = () => {
 
         <p className="center-text">
           Don't have an account?{" "}
-          <Link to="/register" className="link-text">
+          <Link to="/SignUpPage" className="link-text">
             Register
+          </Link>
+        </p>
+
+        <p className="center-text vendor-register-link">
+          Are you a business owner?{" "}
+          <Link to="/vendor-signup" className="link-text">
+            Register here
           </Link>
         </p>
 

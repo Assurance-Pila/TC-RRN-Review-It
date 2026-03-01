@@ -20,7 +20,6 @@ const Register = () => {
         </div>
         <Input label="Social Media URL" placeholder="TikTok/IG/WhatsApp URL" />
 
-
         <Input label="E-mail/Whatsapp Number" placeholder="Enter your email or Contact" />
         <Input label="Password" type="password" placeholder="********" />
         <Input label="Confirm Password" type="password" placeholder="********" />
@@ -29,7 +28,7 @@ const Register = () => {
 
         <p className="center-text">
           Already have an account?{" "}
-          <Link to="/" className="link-text">
+          <Link to="/login" className="link-text">
             Login
           </Link>
         </p>
