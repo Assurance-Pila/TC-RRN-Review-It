@@ -7,7 +7,7 @@ import VendorTopbar           from "../../components/vendor/VendorTopbar.jsx";
 import VendorOverviewPage     from "../../pages/VendorOverviewPage.jsx";
 import VendorFeedPage         from "../VendorFeedPage.jsx";
 import VendorReviewsPage      from "../VendorReviewsPage.jsx";
-import VendorMyProfilePage    from "../../pages/VendorMyProfilePage.jsx";
+import VendorMyProfilePage    from "../VendorMyProfilePage.jsx";
 import VendorEditProfilePage  from "../../pages/VendorEditProfilePage.jsx";
 import VendorBusinessCardPage from "../../pages/VendorBusinessCardPage.jsx";
 import VendorVerificationPage from "../../pages/VendorVerificationPage.jsx";
