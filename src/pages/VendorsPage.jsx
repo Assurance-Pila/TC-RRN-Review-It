@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/vendors.css";
 
@@ -29,15 +29,6 @@ const CATEGORIES = ["All", ...Array.from(new Set(ALL_VENDORS.map(v => v.category
 
 export default function VendorsPage() {
   const navigate = useNavigate();
-  const [query, setQuery]       = useState("");
-  const [category, setCategory] = useState("All");
-
-  const filtered = ALL_VENDORS.filter(v => {
-    const q = query.toLowerCase();
-    const matchSearch = !q || v.name.toLowerCase().includes(q) || v.instagram.toLowerCase().includes(q) || v.tiktok.toLowerCase().includes(q);
-    const matchCat    = category === "All" || v.category === category;
-    return matchSearch && matchCat;
-  });
 
   return (
     <div className="vendors-root">
@@ -48,44 +39,40 @@ export default function VendorsPage() {
           <h1>Browse Vendors</h1>
           <p>Discover registered vendors. Sign in to see full profiles, reviews, and scam alerts.</p>
           <div className="vp-search">
-            <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search by name, @instagram or @tiktok…" />
+            <input placeholder="Search by name, @instagram or @tiktok…" onClick={() => navigate("/login")} />
           </div>
           <div className="vp-cats">
             {CATEGORIES.map(c => (
-              <button key={c} className={`cat-pill ${category === c ? "active" : ""}`} onClick={() => setCategory(c)}>{c}</button>
+              <button key={c} className={`cat-pill ${"All" === c ? "active" : ""}`} onClick={() => navigate("/login")}>{c}</button>
             ))}
           </div>
         </div>
       </div>
 
       <div className="vendors-grid-wrapper">
-        {filtered.length === 0
-          ? <p className="no-results">No vendors found for "{query}".</p>
-          : (
-          <div className="vendors-grid">
-            {filtered.map(v => (
-              <div key={v.id} className={`vendor-card ${v.scam ? "vendor-card--scam" : ""}`}>
-                <div className="vc-top">
-                  <div className="vc-avatar">{v.name.slice(0,2).toUpperCase()}</div>
-                  <div className="vc-meta">
-                    <div className="vc-name">{v.name}</div>
-                    <div className="vc-handle">{v.instagram}</div>
-                  </div>
-                  {v.badge === "platform"  && <span className="vc-badge green"><RosetteBadge color="green" size={13} /> Platform</span>}
-                  {v.badge === "community" && <span className="vc-badge blue"><RosetteBadge color="blue"  size={13} /> Community</span>}
-                  {v.scam                  && <span className="vc-badge red">Scam Alert</span>}
+        <div className="vendors-grid">
+          {ALL_VENDORS.map(v => (
+            <div key={v.id} className={`vendor-card ${v.scam ? "vendor-card--scam" : ""}`}>
+              <div className="vc-top">
+                <div className="vc-avatar">{v.name.slice(0,2).toUpperCase()}</div>
+                <div className="vc-meta">
+                  <div className="vc-name">{v.name}</div>
+                  <div className="vc-handle">{v.instagram}</div>
                 </div>
-                <div className="vc-info">
-                  <span className="vc-cat">{v.category}</span>
-                  <span className="vc-reviews">{v.reviews} reviews</span>
-                </div>
-                <button className="btn vc-btn" onClick={() => navigate("/login", { state: { prompt: "Sign in to view this vendor's full profile." } })}>
-                  View Profile
-                </button>
+                {v.badge === "platform"  && <span className="vc-badge green"><RosetteBadge color="green" size={13} /> Platform</span>}
+                {v.badge === "community" && <span className="vc-badge blue"><RosetteBadge color="blue"  size={13} /> Community</span>}
+                {v.scam                  && <span className="vc-badge red">Scam Alert</span>}
               </div>
-            ))}
-          </div>
-        )}
+              <div className="vc-info">
+                <span className="vc-cat">{v.category}</span>
+                <span className="vc-reviews">{v.reviews} reviews</span>
+              </div>
+              <button className="btn vc-btn" onClick={() => navigate("/login", { state: { prompt: "Sign in to view this vendor's full profile." } })}>
+                View Profile
+              </button>
+            </div>
+          ))}
+        </div>
 
         <div className="vendors-cta">
           <p>Want to see reviews, ratings, and scam alerts?</p>

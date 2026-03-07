@@ -1,0 +1,88 @@
+/* src/components/cards/BusinessCard.css */
+
+.bc-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.bc-sublabel {
+  font-size: 13px;
+  color: #5a7068;
+  margin: 0;
+  text-align: center;
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+/* ── Logo upload ── */
+.bc-logo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.bc-upload-btn {
+  padding: 9px 20px;
+  border-radius: 9px;
+  border: 1.5px dashed #006D5B;
+  background: #f0faf6;
+  color: #006D5B;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.bc-upload-btn:hover { background: #e0f4ec; }
+
+.bc-upload-hint {
+  font-size: 11.5px;
+  color: #8aaa9e;
+}
+
+/* ── Action buttons ── */
+.bc-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bc-btn-primary {
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: none;
+  background: #006D5B;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.bc-btn-primary:hover:not(:disabled) {
+  background: #00503f;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,109,91,0.25);
+}
+.bc-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.bc-btn-outline {
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: 2px solid #006D5B;
+  background: transparent;
+  color: #006D5B;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.bc-btn-outline:hover { background: rgba(0,109,91,0.06); transform: translateY(-1px); }
+.bc-btn-outline.copied { background: #d4efe5; border-color: #006D5B; color: #006D5B; }

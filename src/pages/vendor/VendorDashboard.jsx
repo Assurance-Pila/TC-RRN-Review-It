@@ -1,57 +1,83 @@
-import { useState } from "react";
-import "../../styles/layout.css";
-import Sidebar from "../../components/layout/Sidebar";
-import Topbar from "../../components/layout/Topbar";
-import VendorCard from "../../components/cards/VendorCard";
-import FloatingActionButton from "../../components/FloatingActionButton";
+/* src/components/vendor/VendorDashboard.jsx */
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const UserDashboard = () => {
-  const [isOpen, setIsOpen] = useState(false);
+import VendorSidebar          from "../../components/vendor/VendorSidebar.jsx";
+import VendorTopbar           from "../../components/vendor/VendorTopbar.jsx";
+import VendorOverviewPage     from "../../pages/VendorOverviewPage.jsx";
+import VendorFeedPage         from "../VendorfeedPage.jsx";
+import VendorReviewsPage      from "../VendorreviewsPage.jsx";
+import VendorMyProfilePage    from "../../pages/VendorMyProfilePage.jsx";
+import VendorEditProfilePage  from "../../pages/VendorEditProfilePage.jsx";
+import VendorBusinessCardPage from "../../pages/VendorBusinessCardPage.jsx";
+import VendorVerificationPage from "../../pages/VendorVerificationPage.jsx";
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+import "../../styles/vendordash.css";
+
+export default function VendorDashboard() {
+  const navigate = useNavigate();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [page,        setPage]        = useState("Overview");
+  const [vendor,      setVendor]      = useState(null);
+  const [allVendors,  setAllVendors]  = useState([]);
+  const [reviews,     setReviews]     = useState([]);
+  const [searches,    setSearches]    = useState([]);
+
+  const reload = () => {
+    const user    = JSON.parse(localStorage.getItem("user")    || "null");
+    const vendors = JSON.parse(localStorage.getItem("vendors") || "[]");
+    const allRevs = JSON.parse(localStorage.getItem("reviews") || "[]");
+    const srch    = JSON.parse(localStorage.getItem("userSearches") || "[]");
+
+    const mine = vendors.find(v =>
+      String(v.id) === String(user?.id) ||
+      (v.name && v.name === (user?.fullName || user?.name))
+    ) || null;
+
+    setVendor(mine);
+    setAllVendors(vendors);
+    setReviews(mine ? allRevs.filter(r => String(r.vendorId) === String(mine.id)) : []);
+    setSearches(srch);
   };
 
-  const vendors = [
-    {
-      name: "Elite Fashion",
-      handle: "elite_fashion",
-      rating: 4.8,
-      reviews: 160,
-      communityVerified: true,
-      platformVerified: true
-    }
-  ];
+  useEffect(() => { reload(); }, []);
+
+  const businessName = vendor?.name || "Business";
+  const initials     = businessName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+
+  const handleNav    = (key) => { setPage(key); setSidebarOpen(false); };
+  const handleLogout = ()    => { localStorage.removeItem("user"); navigate("/login"); };
+
+  const pages = {
+    Overview:     <VendorOverviewPage     vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
+    Feed:         <VendorFeedPage         vendors={allVendors} searches={searches} onViewVendor={() => {}} />,
+    MyReviews:    <VendorReviewsPage      reviews={reviews} />,
+    MyProfile:    <VendorMyProfilePage    vendor={vendor} reviews={reviews} />,
+    EditProfile:  <VendorEditProfilePage  vendor={vendor} onSaved={reload} />,
+    BusinessCard: <VendorBusinessCardPage vendor={vendor} />,
+    Verification: <VendorVerificationPage vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
+  };
 
   return (
-    <div className="dashboard-container">
+    <div className="vd-root">
+      {sidebarOpen && <div className="vd-overlay" onClick={() => setSidebarOpen(false)} />}
 
-      {isOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
-
-      <Sidebar
-        links={["Home", "Search", "My Reviews", "Scam Alerts", "Logout"]}
-        isOpen={isOpen}
-        closeSidebar={() => setIsOpen(false)}
+      <VendorSidebar
+        page={page}
+        isOpen={sidebarOpen}
+        onNavigate={handleNav}
+        onLogout={handleLogout}
       />
 
-      <div className="dashboard-content">
-        <Topbar title="User Dashboard" toggleSidebar={toggleSidebar} />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {vendors.map((vendor, index) => (
-            <VendorCard key={index} vendor={vendor} />
-          ))}
-        </div>
-
-        <FloatingActionButton />
+      <div className="vd-main">
+        <VendorTopbar
+          businessName={businessName}
+          initials={initials}
+          onToggleSidebar={() => setSidebarOpen(o => !o)}
+        />
+        <main className="vd-body">{pages[page]}</main>
       </div>
     </div>
   );
-};
-
-export default UserDashboard;
+}
