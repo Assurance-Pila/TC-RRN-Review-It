@@ -5,7 +5,7 @@ import Navbar        from "../components/Navbar";
 import Footer        from "../components/Footer";
 import VendorCard    from "../components/cards/VendorCard";
 import VendorProfile from "../components/cards/VendorProfile";
-import "../styles/publicvendors.css";
+import "../styles/PublicVendors.css";
 
 const CATS = ["All","Fashion","Food & Drinks","Tech & Gadgets","Footwear","Jewellery & Accessories","Beauty & Skincare","Home & Decor"];
 
