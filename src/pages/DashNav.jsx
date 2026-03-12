@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpeg";
 import { HomeIco, SearchIco, ReviewIco, AlertIco, ActIco, ProfileIco, WriteIco, LogoutIco } from "../components/icons.jsx";
-import "../styles/dashnav.css";
+import "../styles/DashNav.css";
 
 /* ── Vendor nav icons ── */
 const ExploreIco = () => (
