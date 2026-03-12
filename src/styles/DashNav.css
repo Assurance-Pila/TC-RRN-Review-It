@@ -1,0 +1,229 @@
+/* src/styles/dashnav.css */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ── Root ── */
+.dn-root {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #006D5B;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.14);
+}
+
+.dn-bar {
+  display: flex;
+  align-items: center;
+  height: 62px;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Logo ── */
+.dn-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 24px;
+}
+.dn-logo-img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
+.dn-brand    { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; color: #C3EAD6; white-space: nowrap; letter-spacing: -0.01em; }
+
+/* ── Desktop nav — fills ALL remaining space, items spread evenly ── */
+.dn-nav {
+  display: flex;
+  align-items: center;
+  flex: 1;               /* take all remaining width */
+  min-width: 0;
+}
+
+.dn-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 8px;
+  height: 62px;
+  /* Reset all button chrome */
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  /* Underline lives as a box-shadow on the bottom edge — no border needed */
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.15s;
+}
+/* Underline drawn with ::after — avoids any border/outline conflicts */
+.dn-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 10%; right: 10%;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: transparent;
+  transition: background 0.15s;
+}
+.dn-item svg { flex-shrink: 0; }
+.dn-item:focus        { outline: none; box-shadow: none; }
+.dn-item:focus-visible { outline: none; box-shadow: none; }
+.dn-item:hover        { color: #fff; background: transparent; }
+.dn-item:hover::after { background: rgba(255,255,255,0.35); }
+.dn-item.active        { color: #fff; font-weight: 600; background: rgba(195,234,214,0.15); }
+.dn-item.active::after { background: #C3EAD6; }
+.dn-item.cta           { color: #C3EAD6; font-weight: 600; }
+.dn-item.cta:hover        { color: #fff; background: transparent; }
+.dn-item.cta:hover::after { background: rgba(195,234,214,0.5); }
+.dn-item.active.cta        { background: rgba(195,234,214,0.15); }
+.dn-item.active.cta::after { background: #C3EAD6; }
+
+/* Alert dot badge */
+.dn-dot {
+  background: #dc2626;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  margin-left: 2px;
+  line-height: 1.4;
+}
+
+/* ── Right side ── */
+.dn-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 16px;
+  flex-shrink: 0;
+}
+
+/* Avatar button */
+.dn-avatar-wrap { position: relative; }
+.dn-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: #C3EAD6;
+  color: #006D5B;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+.dn-avatar:hover { border-color: rgba(195,234,214,0.6); box-shadow: 0 0 0 3px rgba(195,234,214,0.2); }
+
+/* Dropdown panel */
+.dn-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0ece8;
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 190px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+  z-index: 200;
+}
+
+/* Name/role header inside dropdown */
+.dn-dd-header {
+  padding: 10px 13px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dn-dd-name { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #1a2e28; }
+.dn-dd-role { font-size: 11.5px; color: #5a7068; font-weight: 500; }
+
+.dn-dd-item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 10px 13px;
+  border: none; background: none; border-radius: 9px;
+  font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500;
+  color: #1a2e28; cursor: pointer; text-align: left;
+  transition: background 0.12s;
+}
+.dn-dd-item:hover        { background: #f4f7f6; }
+.dn-dd-item.logout       { color: #dc2626; }
+.dn-dd-item.logout:hover { background: #fff5f5; }
+.dn-dd-divider { height: 1px; background: #e0ece8; margin: 4px 0; }
+
+/* ── Mobile hamburger ── */
+.dn-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 5px; margin-left: 4px; border-radius: 6px;
+}
+.dn-hamburger:hover { background: rgba(255,255,255,0.1); }
+.dn-hamburger span  { display: block; width: 20px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; }
+
+/* ── Mobile drawer ── */
+.dn-drawer {
+  background: #005a4a;
+  padding: 10px 12px 16px;
+  display: flex; flex-direction: column; gap: 2px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.dn-drawer-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 10px;
+  border: none; background: transparent;
+  color: rgba(255,255,255,0.78);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; text-align: left; width: 100%;
+  transition: background 0.12s, color 0.12s;
+}
+.dn-drawer-item:hover  { background: rgba(255,255,255,0.1); color: #fff; }
+.dn-drawer-item.active { background: rgba(195,234,214,0.18); color: #C3EAD6; font-weight: 600; }
+.dn-drawer-item.cta    { color: #C3EAD6; font-weight: 600; }
+.dn-drawer-item.logout { color: rgba(252,165,165,0.85); }
+.dn-drawer-item.logout:hover { background: rgba(220,38,38,0.12); color: #fca5a5; }
+.dn-drawer-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 6px 0; }
+
+/* Click-outside overlay */
+.dn-outside { position: fixed; inset: 0; z-index: 99; }
+
+/* ── Welcome bar — sits directly below navbar, vendor only ── */
+.dn-welcome-bar {
+  background: #f0f9f5;
+  border-bottom: 1px solid #d4ede5;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.dn-welcome-text        { font-size: 13.5px; color: #1a2e28; }
+.dn-welcome-text strong { font-weight: 700; color: #006D5B; }
+.dn-welcome-meta        { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dn-welcome-badge       { font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
+.dn-welcome-badge.teal  { background: #d4efe5; color: #006D5B; }
+.dn-welcome-badge.blue  { background: #dbeafe; color: #1d4ed8; }
+.dn-welcome-rating      { font-size: 12px; font-weight: 600; color: #92400e; background: #fef9ec; padding: 3px 10px; border-radius: 99px; }
+
+/* ── Responsive ── */
+@media (max-width: 900px)  { .dn-item { font-size: 12.5px; gap: 5px; padding: 10px 6px; } }
+@media (max-width: 768px)  { .dn-nav { display: none; } .dn-hamburger { display: flex; } .dn-bar { padding: 0 16px; } }
+@media (max-width: 560px)  { .dn-welcome-bar { padding: 8px 16px; } .dn-welcome-meta { display: none; } }

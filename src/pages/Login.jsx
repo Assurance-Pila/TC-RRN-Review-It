@@ -91,7 +91,7 @@ const Login = () => {
         <div className="login-form-wrap">
           <div className="lf-header">
             <h1>Sign in</h1>
-            <p>Don't have an account? <Link to="/SignUpPage">Sign up</Link></p>
+            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
           </div>
 
           <form className="lf-form" onSubmit={handleSubmit} noValidate>

@@ -1,0 +1,66 @@
+/* src/styles/publicvendors.css */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+.pv-root { font-family: 'DM Sans', sans-serif; color: #1a2e28; background: #f4f7f6; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Hero search band ── */
+.pv-hero        { background: #006D5B; padding: 52px 24px 44px; text-align: center; color: #fff; }
+.pv-hero h1     { font-family: 'Sora', sans-serif; font-size: 34px; font-weight: 800; margin: 0 0 10px; letter-spacing: -.02em; }
+.pv-hero p      { font-size: 15px; opacity: .82; margin: 0 0 26px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+.pv-search-row  { max-width: 520px; margin: 0 auto 16px; }
+.pv-search-box  { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 11px; padding: 11px 14px; }
+.pv-search-box svg   { color: #5a7068; flex-shrink: 0; }
+.pv-search-box input { flex: 1; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #1a2e28; }
+.pv-search-box input::placeholder { color: #a0b8b0; }
+.pv-clear { background: none; border: none; cursor: pointer; color: #8aaa9e; padding: 2px; display: flex; align-items: center; }
+.pv-clear:hover { color: #006D5B; }
+
+.pv-pills  { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; max-width: 700px; margin: 0 auto; }
+.pv-pill   { padding: 5px 14px; border-radius: 99px; border: 1px solid rgba(195,234,214,.3); background: rgba(195,234,214,.08); color: rgba(255,255,255,.75); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: background .15s, color .15s; font-family: 'DM Sans', sans-serif; }
+.pv-pill:hover  { background: rgba(195,234,214,.18); color: #fff; }
+.pv-pill.active { background: #C3EAD6; color: #006D5B; font-weight: 600; border-color: #C3EAD6; }
+
+/* ── Body ── */
+.pv-body { flex: 1; max-width: 1100px; width: 100%; margin: 0 auto; padding: 28px 24px 60px; display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Login nudge ── */
+.pv-nudge { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #fff; border: 1.5px solid #C3EAD6; border-radius: 12px; padding: 14px 18px; font-size: 13.5px; color: #1a2e28; }
+.pv-nudge-btns { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pv-nudge-btn  { padding: 7px 16px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background .15s; }
+.pv-nudge-btn.primary { background: #006D5B; color: #fff; border: none; }
+.pv-nudge-btn.primary:hover { background: #00503f; }
+.pv-nudge-btn.outline { background: transparent; color: #006D5B; border: 1.5px solid #006D5B; }
+.pv-nudge-btn.outline:hover { background: #e6f5f0; }
+.pv-nudge-close { background: none; border: none; cursor: pointer; color: #8aaa9e; font-size: 16px; padding: 2px 6px; }
+
+/* ── Scam warning ── */
+.pv-scam-warning { display: flex; align-items: flex-start; gap: 10px; background: #fff9f9; border: 1.5px solid #fecaca; border-radius: 12px; padding: 14px 16px; font-size: 13.5px; color: #991b1b; }
+.pv-scam-warning svg { flex-shrink: 0; margin-top: 1px; }
+.pv-scam-name { font-weight: 600; }
+
+/* ── Results ── */
+.pv-results-head  { display: flex; align-items: center; }
+.pv-results-count { font-size: 13px; color: #5a7068; font-weight: 500; }
+.pv-results-query { font-weight: 600; color: #1a2e28; }
+
+.pv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 1000px) { .pv-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .pv-grid { grid-template-columns: 1fr; } }
+
+/* ── Empty state ── */
+.pv-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 60px 20px; color: #5a7068; text-align: center; }
+.pv-empty p    { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #1a2e28; margin: 0; }
+.pv-empty span { font-size: 13.5px; }
+
+/* ── Vendor CTA banner ── */
+.pv-cta-banner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; background: #fff; border: 1px solid #e0ece8; border-radius: 14px; padding: 20px 24px; font-size: 14px; color: #1a2e28; margin-top: 8px; }
+.pv-cta-btn    { padding: 10px 20px; background: #006D5B; color: #fff; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .15s; }
+.pv-cta-btn:hover { background: #00503f; }
+
+@media (max-width: 600px) {
+  .pv-hero h1     { font-size: 26px; }
+  .pv-hero        { padding: 36px 18px 32px; }
+  .pv-body        { padding: 20px 16px 50px; }
+  .pv-cta-banner  { flex-direction: column; align-items: flex-start; }
+}

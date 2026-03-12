@@ -1,12 +1,88 @@
-.dashboard-container {
-  @apply flex h-screen bg-gray-100 relative;
+/* src/styles/layout.css
+   Global-only styles: CSS variables, reset, shell layout,
+   kill block for dead sidebar classes, and shared utilities.
+   Page-specific styles live in userdash.css / vendordash.css / auth.css.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ── Variables ── */
+:root {
+  --teal:      #006D5B;
+  --teal-dark: #00503f;
+  --mint:      #C3EAD6;
+  --bg:        #f4f7f6;
+  --white:     #ffffff;
+  --text:      #1a2e28;
+  --muted:     #5a7068;
+  --border:    #e0ece8;
+  --red:       #dc2626;
+  --gold:      #f59e0b;
+  --navbar-h:  62px;
 }
 
-.dashboard-content {
-  @apply flex-1 p-6 overflow-y-auto transition-all duration-300;
+*, html, body { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Kill sidebar / overlay / hamburger — zero visual output ── */
+.sidebar, .dash-sidebar, .ud-sidebar, .vd-sidebar,
+.sidebar-overlay, .dash-overlay,
+.menu-button, .dash-hamburger, .ud-hamburger, .vd-hamburger,
+.ds-bottom, .ds-nav, .ds-link, .ds-user-pill {
+  display: none !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: static !important;
 }
 
-/* Overlay for mobile */
-.sidebar-overlay {
-  @apply fixed inset-0 bg-black bg-opacity-40 z-40;
+/* ── Shell — column stack, no sidebar offset ── */
+.dashboard-container,
+.dash-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
 }
+
+.dashboard-content,
+.dash-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: 0 !important;
+  background: var(--bg);
+}
+
+/* ── Shared grid utility ── */
+.grid         { display: grid; gap: 18px; }
+.grid-cols-1  { grid-template-columns: 1fr; }
+.grid-cols-2  { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3  { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4  { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 { grid-template-columns: 1fr; }
+}
+
+/* ── Shared button ── */
+.dash-btn         { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 24px; border-radius: 10px; border: none; background: var(--teal); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: .2s; text-decoration: none; }
+.dash-btn:hover   { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,109,91,.2); }
+.dash-btn.outline { background: transparent; border: 2px solid var(--teal); color: var(--teal); }
+.dash-btn.outline:hover { background: var(--teal); color: #fff; }
+.dash-btn.danger  { background: #fee2e2; color: var(--red); border: none; }
+.dash-btn.danger:hover  { background: #fecaca; transform: none; box-shadow: none; }
+
+/* ── Shared badge colours (used across feed sections) ── */
+.feed-badge-gold  { background: #fef9ec !important; border-color: #fde68a !important; color: #92400e !important; }
+.feed-badge-green { background: #ecfdf5 !important; border-color: #a7f3d0 !important; color: #065f46 !important; }
+.feed-badge-teal  { background: #d4efe5 !important; border-color: var(--mint) !important; color: var(--teal) !important; }
+.feed-badge-blue  { background: #dbeafe !important; border-color: #bfdbfe !important; color: #1d4ed8 !important; } 
