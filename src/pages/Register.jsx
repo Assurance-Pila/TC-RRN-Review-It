@@ -30,14 +30,14 @@ export default function Register() {
     firstName: "", lastName: "", businessName: "", category: "",
     socialMediaUrl: "", phone: "", email: "", password: "", confirmPassword: "",
   });
-  const [showPass,    setShowPass]    = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [error,       setError]       = useState("");
-  const [loading,     setLoading]     = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const set = (field) => (e) => setForm(p => ({ ...p, [field]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     const { firstName, lastName, phone, email, password, confirmPassword, category } = form;
@@ -48,28 +48,34 @@ export default function Register() {
     if (!category)                   { setError("Please select a business category."); return; }
     if (password.length < 8)         { setError("Password must be at least 8 characters."); return; }
     if (password !== confirmPassword) { setError("Passwords do not match.");           return; }
+    
+    setLoading(true);
 
     const vendor = {
       id: Date.now(),
-      name: form.businessName.trim() || `${firstName} ${lastName}`,
-      firstName, lastName,
-      businessName: form.businessName,
+      firstName,
+      lastName,
+      businessName: form.businessName || `${firstName} ${lastName}'s Business`,
       category,
-      socialMediaUrl: form.socialMediaUrl,
-      phone, email,
-      role: "vendor",
-      platformVerified: false,
-      communityVerified: false,
-      scam: false,
+      socialMediaUrl: form.socialMediaUrl || '',
+      phone,
+      email,
+      password,
+      role: 'vendor',
       rating: 0,
       reviews: 0,
       profileViews: 0,
+      platformVerified: false,
+      communityVerified: false,
+      scam: false,
       createdAt: new Date().toISOString(),
     };
-    localStorage.setItem("user", JSON.stringify(vendor));
+    
     const existing = JSON.parse(localStorage.getItem("vendors") || "[]");
     localStorage.setItem("vendors", JSON.stringify([...existing, vendor]));
-    navigate("/vendor");
+    
+    setLoading(false);
+    navigate("/login");
   };
 
   return (

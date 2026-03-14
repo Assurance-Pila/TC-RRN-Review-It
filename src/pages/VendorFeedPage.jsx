@@ -46,8 +46,8 @@ export default function VendorFeedPage({ vendors, searches, onViewVendor }) {
         <p style={{ fontSize: 13, color: "var(--muted)" }}>See how other businesses on the platform are performing. Use this to benchmark and improve.</p>
       </div>
 
-      <FeedSection title="⭐ Platform Recommended" badgeClass="feed-badge-gold" desc="Verified by the platform and community — the highest trust tier." vendors={platformRecommended} onView={onViewVendor} />
-      <FeedSection title="🟢 Highest Rated" badgeClass="feed-badge-green" desc="Businesses rated 4 stars and above by real buyers." vendors={highestRated} onView={onViewVendor} />
+      <FeedSection title=" Platform Recommended" desc="Verified by the platform and community — the highest trust tier." vendors={platformRecommended} onView={onViewVendor} />
+      <FeedSection title="Highest Rated" badgeClass="feed-badge-green" desc="Businesses rated 4 stars and above by real buyers." vendors={highestRated} onView={onViewVendor} />
       <FeedSection title={<span style={{ display:"inline-flex", alignItems:"center", gap:5 }}><Rosette size={13} /> Platform Verified</span>} badgeClass="feed-badge-teal" desc="Vetted and approved by the Review It platform team." vendors={platformVerified} onView={onViewVendor} />
       <FeedSection title={<span style={{ display:"inline-flex", alignItems:"center", gap:5 }}><Rosette blue size={13} /> Community Verified</span>} badgeClass="feed-badge-blue" desc="Trusted by buyers through consistent positive reviews." vendors={communityVerified} onView={onViewVendor} />
       <FeedSection title="Other Businesses" desc="Unverified vendors — see where they stand." vendors={unverified} onView={onViewVendor} />

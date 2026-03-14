@@ -123,8 +123,8 @@ export default function VendorExplorePage({ vendors, searches }) {
         </div>
       ) : (
         <>
-          <FeedSection title={<span style={{ display:"inline-flex", alignItems:"center", gap:5 }}>⭐ Platform Recommended</span>}    badgeClass="feed-badge-gold"  vendors={platformRecommended} onView={() => {}} />
-          <FeedSection title="🟢 Highest Rated"                                                                                        badgeClass="feed-badge-green" vendors={highestRated}        onView={() => {}} />
+          <FeedSection title="Platform Recommended"    badgeClass="feed-badge-gold"  vendors={platformRecommended} onView={() => {}} />
+          <FeedSection title="Highest Rated"                                                                                        badgeClass="feed-badge-green" vendors={highestRated}        onView={() => {}} />
           <FeedSection title={<span style={{ display:"inline-flex", alignItems:"center", gap:5 }}><Rosette size={13} /> Platform Verified</span>}   badgeClass="feed-badge-teal"  vendors={platformVerified}    onView={() => {}} />
           <FeedSection title={<span style={{ display:"inline-flex", alignItems:"center", gap:5 }}><Rosette blue size={13} /> Community Verified</span>} badgeClass="feed-badge-blue"  vendors={communityVerified}   onView={() => {}} />
           <FeedSection title="Other Businesses"                                                                                                         vendors={unverified}          onView={() => {}} />

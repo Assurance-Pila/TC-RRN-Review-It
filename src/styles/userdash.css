@@ -215,6 +215,7 @@ html, body { margin: 0; padding: 0; }
 .vp-av     { width: 52px; height: 52px; border-radius: 50%; background: #e6f5f0; color: var(--teal); font-family: 'Sora', sans-serif; font-weight: 800; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .vp-title  { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); }
 .vp-meta   { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.vp-location { font-size: 12.5px; color: var(--teal); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
 .vp-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
 .vp-stats  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 11px; overflow: hidden; margin-bottom: 16px; }
 .vp-stat       { background: var(--white); padding: 14px 12px; text-align: center; }
@@ -231,6 +232,8 @@ html, body { margin: 0; padding: 0; }
 .rv-text     { font-size: 13px; color: var(--muted); line-height: 1.55; }
 .vp-write-btn { width: 100%; padding: 11px; border-radius: 10px; border: none; background: var(--teal); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s; }
 .vp-write-btn:hover { background: var(--teal-dark); }
+.vp-scam-btn { padding: 11px; border-radius: 8px; border: 1px solid #fecdd3; background: #fee2e2; color: #991b1b; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .15s, transform 0.15s; }
+.vp-scam-btn:hover { background: #f87171; transform: translateY(-1px); }
 
 /* ══ REVIEW FORM ══ */
 .rf-wrap    { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 18px; max-width: 560px; }

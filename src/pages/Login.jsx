@@ -33,7 +33,7 @@ const Login = () => {
 
     if (!match) { setError("No account found with that email or phone."); return; }
 
-    // Ensure role is set — fallback based on which list they came from
+    // Ensure role is set - fallback based on which list they came from
     const role = match.role || (vendors.includes(match) ? "vendor" : "user");
     const sessionUser = { ...match, role };
     localStorage.setItem("user", JSON.stringify(sessionUser));

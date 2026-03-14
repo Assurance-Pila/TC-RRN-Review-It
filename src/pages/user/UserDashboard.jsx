@@ -39,8 +39,31 @@ export default function UserDashboard() {
     setReviews( JSON.parse(localStorage.getItem("reviews")      || "[]"));
     setActivity(JSON.parse(localStorage.getItem("userActivity") || "[]"));
     setSearches(JSON.parse(localStorage.getItem("userSearches") || "[]"));
+    syncVendorReviewCounts(); // Sync review counts after loading
   };
   useEffect(() => { reload(); }, []);
+
+  // Sync vendor review counts with actual reviews
+  const syncVendorReviewCounts = () => {
+    const vArr = JSON.parse(localStorage.getItem("vendors") || "[]");
+    const rArr = JSON.parse(localStorage.getItem("reviews") || "[]");
+    
+    vArr.forEach(vendor => {
+      const vendorReviews = rArr.filter(r => 
+        String(r.vendorId) === String(vendor.id) || 
+        String(r.business_id) === String(vendor.id) ||
+        String(r.businessId) === String(vendor.id)
+      );
+      
+      if (vendorReviews.length > 0) {
+        vendor.reviews = vendorReviews.length;
+        vendor.rating = vendorReviews.reduce((s, r) => s + r.rating, 0) / vendorReviews.length;
+      }
+    });
+    
+    localStorage.setItem("vendors", JSON.stringify(vArr));
+    setVendors(vArr);
+  };
 
   const userName    = user?.fullName || user?.name || "User";
   const initials    = userName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
@@ -107,10 +130,45 @@ export default function UserDashboard() {
     if (idx > -1) {
       vArr[idx].profileViews = (vArr[idx].profileViews || 0) + 1;
       localStorage.setItem("vendors", JSON.stringify(vArr));
+      setVendors(vArr); // Update state to reflect changes
     }
     /* Log to activity */
     const entry = { type: "profile", text: `Viewed profile of ${vendor.name}`, time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) };
     const act   = JSON.parse(localStorage.getItem("userActivity") || "[]");
+    localStorage.setItem("userActivity", JSON.stringify([entry, ...act].slice(0, 50)));
+    setActivity(prev => [entry, ...prev].slice(0, 50));
+  };
+
+  /* ── Review writing with auth check ── */
+  const handleWriteReview = (vendor) => {
+    if (!user) {
+      // Show login/signup link instead of redirect
+      alert("Please sign in or create an account to write a review.");
+      return;
+    }
+    setReviewPrefill(vendor);
+    handleNav("PostReview");
+  };
+
+  /* ── Scam flagging ── */
+  const handleFlagScam = (vendor) => {
+    if (!user) {
+      // Show login/signup link instead of redirect
+      alert("Please sign in or create an account to flag a vendor as scam.");
+      return;
+    }
+    
+    const vArr = JSON.parse(localStorage.getItem("vendors") || "[]");
+    const idx = vArr.findIndex(v => v.id === vendor.id);
+    if (idx > -1) {
+      vArr[idx].scam = true;
+      localStorage.setItem("vendors", JSON.stringify(vArr));
+      setVendors(vArr);
+      reload(); // Refresh to update scam count
+    }
+    
+    const entry = { type: "flag", text: `Flagged ${vendor.name} as scam`, time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) };
+    const act = JSON.parse(localStorage.getItem("userActivity") || "[]");
     localStorage.setItem("userActivity", JSON.stringify([entry, ...act].slice(0, 50)));
     setActivity(prev => [entry, ...prev].slice(0, 50));
   };
@@ -138,8 +196,8 @@ export default function UserDashboard() {
     MyProfile:  <MyProfilePage  user={user} userName={userName} initials={initials} myReviews={myReviews} vendors={vendors} searches={searches} />,
   };
 
-  /* Show search bar only on the Search page */
-  const showSearch = page === "Search";
+  /* Show search bar on all pages */
+  const showSearch = true;
 
   return (
     <div className="ud-root">
@@ -202,7 +260,8 @@ export default function UserDashboard() {
           vendor={viewVendor}
           allReviews={reviews}
           onClose={() => { setViewVendor(null); reload(); }}
-          onWriteReview={(v) => { setReviewPrefill(v); handleNav("PostReview"); }}
+          onWriteReview={(v) => handleWriteReview(v)}
+          onFlagScam={(v) => handleFlagScam(v)}
         />
       )}
     </div>

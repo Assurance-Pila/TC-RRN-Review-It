@@ -44,7 +44,7 @@ const USER_NAV = [
 ];
 
 const VENDOR_NAV = [
-  { key: "Dashboard",       label: "Dashboard",       Icon: DashIco },
+  { key: "Home",           label: "Home",            Icon: DashIco },
   { key: "Explore",         label: "Explore",          Icon: ExploreIco },
   { key: "MyProfile",       label: "My Profile",       Icon: ProfileIco },
   { key: "BoostVisibility", label: "Boost Visibility", Icon: BoostIco, cta: true },
@@ -174,7 +174,7 @@ export default function DashNav({ role, page, userName, initials, vendor, scamCo
           <div className="dn-welcome-meta">
             {vendor.platformVerified  && <span className="dn-welcome-badge teal">✓ Platform Verified</span>}
             {vendor.communityVerified && <span className="dn-welcome-badge blue">✓ Community Verified</span>}
-            {avgRating && <span className="dn-welcome-rating">⭐ {avgRating}</span>}
+            {avgRating && <span className="dn-welcome-rating">{avgRating}</span>}
           </div>
         </div>
       )}

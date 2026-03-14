@@ -17,7 +17,7 @@ import "../../styles/vendordash.css";
 
 export default function VendorDashboard() {
   const navigate = useNavigate();
-  const [page,       setPage]       = useState("Dashboard");
+  const [page,       setPage]       = useState("Home");
   const [vendor,     setVendor]     = useState(null);
   const [allVendors, setAllVendors] = useState([]);
   const [reviews,    setReviews]    = useState([]);
@@ -47,7 +47,7 @@ export default function VendorDashboard() {
   const handleLogout = ()    => { localStorage.removeItem("user"); navigate("/login"); };
  
   const pages = {
-    Dashboard:       <VendorDashboardPage       vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
+    Home:            <VendorDashboardPage       vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
     Explore:         <VendorExplorePage          vendors={allVendors} searches={searches} />,
     MyProfile:       <VendorMyProfilePage        vendor={vendor} reviews={reviews} onSaved={reload} />,
     BoostVisibility: <VendorBoostVisibilityPage  vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
@@ -66,7 +66,7 @@ export default function VendorDashboard() {
       />
       <div className="vd-main">
         <main className="vd-body">
-          {pages[page] ?? pages["Dashboard"]}
+          {pages[page] ?? pages["Home"]}
         </main>
       </div>
     </div>

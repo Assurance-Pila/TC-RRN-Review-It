@@ -43,19 +43,23 @@ export default function SignUpPage() {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 600));
+
     const user = {
       id: Date.now(),
       fullName: form.fullName,
       phone: form.phone,
-      email: form.email || form.phone,
-      role: "user",
+      email: form.email,
+      password: form.password,
+      role: 'user',
+      createdAt: new Date().toISOString(),
     };
     localStorage.setItem("user", JSON.stringify(user));
+    
     const existing = JSON.parse(localStorage.getItem("users") || "[]");
     localStorage.setItem("users", JSON.stringify([...existing, user]));
+    
     setLoading(false);
-    navigate("/user");
+    navigate("/login");
   };
 
   return (
@@ -96,13 +100,15 @@ export default function SignUpPage() {
           </div>
 
           <div className="af-field">
-            <label>Email <span className="af-optional">(optional)</span></label>
+            <label>Email <span className="af-required">*</span></label>
             <input
               type="email"
               placeholder="you@example.com"
               value={form.email}
               onChange={e => update("email", e.target.value)}
+              className={errors.email ? "error" : ""}
             />
+            {errors.email && <span className="af-error">{errors.email}</span>}
           </div>
 
           <div className="af-field">
@@ -138,6 +144,8 @@ export default function SignUpPage() {
             </div>
             {errors.confirm && <span className="af-error">{errors.confirm}</span>}
           </div>
+
+          {errors.submit && <div className="af-error-banner">{errors.submit}</div>}
 
           <button type="submit" className="af-submit" disabled={loading}>
             {loading ? "Creating account…" : "Create Account"}

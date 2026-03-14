@@ -3,7 +3,12 @@ import { Rosette, Stars, AlertIco, CloseIco, PhoneIco, MailIco } from "../icons.
 
 export default function VendorProfile({ vendor, allReviews, onClose, onWriteReview }) {
   const initials  = (vendor.name || "??").slice(0, 2).toUpperCase();
-  const vReviews  = allReviews.filter(r => String(r.vendorId) === String(vendor.id));
+  // Try multiple ways to match reviews to vendor
+  const vReviews  = allReviews.filter(r => 
+    String(r.vendorId) === String(vendor.id) || 
+    String(r.business_id) === String(vendor.id) ||
+    String(r.businessId) === String(vendor.id)
+  );
   const avgRating = vReviews.length ? vReviews.reduce((s, r) => s + r.rating, 0) / vReviews.length : (vendor.rating || 0);
 
   return (
@@ -16,6 +21,7 @@ export default function VendorProfile({ vendor, allReviews, onClose, onWriteRevi
           <div>
             <div className="vp-title">{vendor.name}</div>
             <div className="vp-meta">{vendor.category || "Vendor"}{vendor.socialMediaUrl ? ` · ${vendor.socialMediaUrl}` : ""}</div>
+            {vendor.address && <div className="vp-location">{vendor.address}</div>}
           </div>
         </div>
 
@@ -59,7 +65,28 @@ export default function VendorProfile({ vendor, allReviews, onClose, onWriteRevi
               ))}
             </div>
         }
-        {!vendor.scam && <button className="vp-write-btn" onClick={() => { onWriteReview(vendor); onClose(); }}>Write a Review</button>}
+        {!vendor.scam && (
+          <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
+            <button className="vp-write-btn" onClick={() => { onWriteReview(vendor); onClose(); }}>Write a Review</button>
+            <button 
+              className="vp-scam-btn" 
+              onClick={() => onFlagScam && onFlagScam(vendor)}
+              style={{ 
+                background: "#fee2e2", 
+                color: "#991b1b", 
+                border: "1px solid #fecdd3",
+                padding: "11px",
+                borderRadius: "8px",
+                fontSize: "13px",
+                fontWeight: "500",
+                cursor: "pointer",
+                transition: "background 0.15s"
+              }}
+            >
+              ⚠ Flag as Scam
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
