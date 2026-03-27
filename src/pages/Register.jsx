@@ -1,6 +1,8 @@
 /* src/pages/Register.jsx */
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { db } from "../utils/database";
 import "../styles/auth.css";
 import logo from "../assets/logo.jpeg";
 
@@ -26,6 +28,7 @@ const EyeOff = () => (
 
 export default function Register() {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [form, setForm] = useState({
     firstName: "", lastName: "", businessName: "", category: "",
     socialMediaUrl: "", phone: "", email: "", password: "", confirmPassword: "",
@@ -51,31 +54,64 @@ export default function Register() {
     
     setLoading(true);
 
-    const vendor = {
-      id: Date.now(),
-      firstName,
-      lastName,
-      businessName: form.businessName || `${firstName} ${lastName}'s Business`,
-      category,
-      socialMediaUrl: form.socialMediaUrl || '',
-      phone,
-      email,
-      password,
-      role: 'vendor',
-      rating: 0,
-      reviews: 0,
-      profileViews: 0,
-      platformVerified: false,
-      communityVerified: false,
-      scam: false,
-      createdAt: new Date().toISOString(),
-    };
-    
-    const existing = JSON.parse(localStorage.getItem("vendors") || "[]");
-    localStorage.setItem("vendors", JSON.stringify([...existing, vendor]));
-    
-    setLoading(false);
-    navigate("/login");
+    try {
+      // 1. Sign up with Supabase Auth
+      const { data, error: signUpError } = await signUp(
+        email.trim(), 
+        password,
+        {
+          data: {
+            role: 'vendor',
+            first_name: firstName,
+            last_name: lastName,
+            business_name: form.businessName || `${firstName} ${lastName}'s Business`,
+            category,
+            social_media_url: form.socialMediaUrl || '',
+            phone
+          }
+        }
+      );
+
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+
+      if (data.user) {
+        // 2. Create vendor record in our database
+        const { data: vendorData, error: dbError } = await db.createVendor({
+          email: email.trim(),
+          password: password, // In production, handle this differently
+          first_name: firstName,
+          last_name: lastName,
+          business_name: form.businessName || `${firstName} ${lastName}'s Business`,
+          category: category,
+          social_media_url: form.socialMediaUrl || '',
+          phone: phone,
+          role: 'vendor',
+          rating: 0,
+          reviews: 0,
+          profile_views: 0,
+          platform_verified: false,
+          community_verified: false,
+          scam: false
+        });
+
+        if (dbError) {
+          console.error('Database error:', dbError);
+          // User was created in Supabase but not in our DB - that's okay for now
+        }
+
+        // 3. Navigate to login with success message
+        setLoading(false);
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error('Vendor signup error:', err);
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

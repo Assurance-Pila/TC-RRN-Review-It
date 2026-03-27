@@ -41,7 +41,10 @@ export default function PublicVendorsPage() {
         (!q ||
           (v.name || "").toLowerCase().includes(q) ||
           (v.businessName || "").toLowerCase().includes(q) ||
-          (v.socialMediaUrl || "").toLowerCase().includes(q)
+          (v.category || "").toLowerCase().includes(q) ||
+          (v.phone || "").toLowerCase().includes(q) ||
+          (v.socialMediaUrl || "").toLowerCase().includes(q) ||
+          (v.email || "").toLowerCase().includes(q)
         ) &&
         (category === "All" || v.category === category)
       );
@@ -70,7 +73,7 @@ export default function PublicVendorsPage() {
       {/* Search hero band */}
       <div className="pv-hero">
         <h1>Find a Vendor</h1>
-        <p>Browse by business name, Instagram handle, or TikTok username. No account needed.</p>
+        <p>Browse by business name, category, phone, Instagram handle, or TikTok username. No account needed.</p>
         <div className="pv-search-row">
           <div className="pv-search-box">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -79,7 +82,7 @@ export default function PublicVendorsPage() {
             <input
               value={query}
               onChange={e => setQuery(e.target.value)}
-              placeholder="Search @instagram, business name…"
+              placeholder="Search by name, category, phone, @instagram…"
               autoFocus
             />
             {query && (
@@ -151,7 +154,7 @@ export default function PublicVendorsPage() {
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <p>No vendors found</p>
-            <span>Try a different name, handle, or category.</span>
+            <span>Try a different name, category, phone, or handle.</span>
           </div>
         ) : (
           <div className="pv-grid">

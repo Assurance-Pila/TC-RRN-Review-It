@@ -1,6 +1,7 @@
 /* src/pages/vendor/VendorDashboard.jsx */
 import { useState, useEffect } from "react";
 import { useNavigate }         from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 import DashNav               from "../DashNav.jsx";
 import VendorOverviewPage    from "../VendorOverviewPage.jsx";
@@ -17,6 +18,7 @@ import "../../styles/vendordash.css";
 
 export default function VendorDashboard() {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth(); // Get user and signOut from Supabase Auth
   const [page,       setPage]       = useState("Home");
   const [vendor,     setVendor]     = useState(null);
   const [allVendors, setAllVendors] = useState([]);
@@ -24,35 +26,37 @@ export default function VendorDashboard() {
   const [searches,   setSearches]   = useState([]);
  
   const reload = () => {
-    const user    = JSON.parse(localStorage.getItem("user")    || "null");
     const vendors = JSON.parse(localStorage.getItem("vendors") || "[]");
     const allRevs = JSON.parse(localStorage.getItem("reviews") || "[]");
     const srch    = JSON.parse(localStorage.getItem("userSearches") || "[]");
-    const mine    = vendors.find(v =>
-      String(v.id) === String(user?.id) ||
-      (v.email && v.email === user?.email)
-    ) || null;
+    
+    // Match vendor by email using Supabase user
+    const mine    = vendors.find(v => v.email === user?.email) || null;
+    
     setVendor(mine);
     setAllVendors(vendors);
     setReviews(mine ? allRevs.filter(r => String(r.vendorId) === String(mine.id)) : []);
     setSearches(srch);
   };
  
-  useEffect(() => { reload(); }, []);
- 
+  useEffect(() => { reload(); }, [user]); // Re-run when user changes
+
   const businessName = vendor?.businessName || vendor?.name || "Business";
   const initials     = businessName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
- 
+
   const handleNav    = (key) => setPage(key);
-  const handleLogout = ()    => { localStorage.removeItem("user"); navigate("/login"); };
- 
+  const handleLogout = async () => { 
+    await signOut(); // Use Supabase signOut
+    navigate("/login"); 
+  };
+
   const pages = {
     Home:            <VendorDashboardPage       vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
     Explore:         <VendorExplorePage          vendors={allVendors} searches={searches} />,
     MyProfile:       <VendorMyProfilePage        vendor={vendor} reviews={reviews} onSaved={reload} />,
     BoostVisibility: <VendorBoostVisibilityPage  vendor={vendor} reviews={reviews} onNavigate={handleNav} />,
   };
- 
+
   return (
     <div className="vd-root">
       <DashNav

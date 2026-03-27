@@ -48,8 +48,11 @@ export default function VendorExplorePage({ vendors, searches }) {
       !v.scam &&
       (!q ||
         (v.name          || "").toLowerCase().includes(q) ||
-        (v.socialMediaUrl || "").toLowerCase().includes(q) ||
-        (v.businessName  || "").toLowerCase().includes(q)
+        (v.businessName  || "").toLowerCase().includes(q) ||
+        (v.category       || "").toLowerCase().includes(q) ||
+        (v.phone         || "").toLowerCase().includes(q) ||
+        (v.socialMediaUrl|| "").toLowerCase().includes(q) ||
+        (v.email         || "").toLowerCase().includes(q)
       ) &&
       (category === "All" || v.category === category)
     );
@@ -75,7 +78,7 @@ export default function VendorExplorePage({ vendors, searches }) {
           <input
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Search by business name, @Instagram, @TikTok…"
+            placeholder="Search by business name, category, phone, @Instagram, @TikTok…"
           />
           {query && (
             <button className="ve-clear" onClick={() => setQuery("")} aria-label="Clear">

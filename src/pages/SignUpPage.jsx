@@ -1,6 +1,8 @@
 /* src/pages/SignUpPage.jsx */
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { db } from "../utils/database";
 import "../styles/auth.css";
 import logo from "../assets/logo.jpeg";
 
@@ -21,6 +23,7 @@ const EyeOff = () => (
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [form,        setForm]        = useState({ fullName: "", phone: "", email: "", password: "", confirm: "" });
   const [showPass,    setShowPass]    = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -33,6 +36,7 @@ export default function SignUpPage() {
     const e = {};
     if (!form.fullName.trim())                                  e.fullName = "Full name is required.";
     if (!/^\+?\d{10,14}$/.test(form.phone.replace(/\s/g, ""))) e.phone    = "Enter a valid phone number.";
+    if (!form.email.trim())                                      e.email    = "Email is required.";
     if (form.password.length < 8)                               e.password = "Password must be at least 8 characters.";
     if (form.password !== form.confirm)                         e.confirm  = "Passwords do not match.";
     return e;
@@ -44,22 +48,50 @@ export default function SignUpPage() {
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
 
-    const user = {
-      id: Date.now(),
-      fullName: form.fullName,
-      phone: form.phone,
-      email: form.email,
-      password: form.password,
-      role: 'user',
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem("user", JSON.stringify(user));
-    
-    const existing = JSON.parse(localStorage.getItem("users") || "[]");
-    localStorage.setItem("users", JSON.stringify([...existing, user]));
-    
-    setLoading(false);
-    navigate("/login");
+    try {
+      // 1. Sign up with Supabase Auth
+      const { data, error: signUpError } = await signUp(
+        form.email.trim(), 
+        form.password,
+        {
+          data: {
+            role: 'user',
+            full_name: form.fullName,
+            phone: form.phone
+          }
+        }
+      );
+
+      if (signUpError) {
+        setErrors({ submit: signUpError.message });
+        return;
+      }
+
+      if (data.user) {
+        // 2. Create user record in our database
+        const { data: userData, error: dbError } = await db.createUser({
+          email: form.email.trim(),
+          password: form.password, // In production, you might want to handle this differently
+          full_name: form.fullName,
+          phone: form.phone,
+          role: 'user'
+        });
+
+        if (dbError) {
+          console.error('Database error:', dbError);
+          // User was created in Supabase but not in our DB - that's okay for now
+        }
+
+        // 3. Navigate to login with success message
+        setLoading(false);
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      setErrors({ submit: "An error occurred. Please try again." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

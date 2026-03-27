@@ -29,7 +29,10 @@
 
 .lp-content  { position: relative; z-index: 1; color: #fff; }
 .lp-logo-wrap { margin-bottom: 32px; }
+.lp-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 32px; transition: opacity 0.15s; }
+.lp-logo-link:hover { opacity: 0.8; }
 .lp-logo      { width: 48px; height: 48px; border-radius: 11px; object-fit: cover; }
+.lp-logo-text { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
 .lp-heading   { font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 800; line-height: 1.15; margin: 0 0 14px; }
 .lp-sub       { font-size: 14px; opacity: 0.8; line-height: 1.65; margin: 0 0 32px; }
 
@@ -80,9 +83,6 @@
 
 .lf-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: #8aaa9e; font-size: 12px; }
 .lf-divider::before, .lf-divider::after { content: ""; flex: 1; height: 1px; background: #e0ece8; }
-
-.lf-google { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 11px; background: #fff; border: 1.5px solid #e0ece8; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; color: #1a2e28; cursor: pointer; transition: background .15s, border-color .15s; }
-.lf-google:hover { background: #f4f7f6; border-color: #c0d6cc; }
 
 .lf-vendor-link { margin-top: 20px; text-align: center; font-size: 13.5px; color: #5a7068; }
 .lf-vendor-link a { color: #006D5B; font-weight: 600; text-decoration: none; }

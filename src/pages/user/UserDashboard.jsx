@@ -114,8 +114,11 @@ export default function UserDashboard() {
       !v.scam &&
       (!q ||
         (v.name          || "").toLowerCase().includes(q) ||
-        (v.socialMediaUrl || "").toLowerCase().includes(q) ||
-        (v.businessName  || "").toLowerCase().includes(q)
+        (v.businessName  || "").toLowerCase().includes(q) ||
+        (v.category       || "").toLowerCase().includes(q) ||
+        (v.phone         || "").toLowerCase().includes(q) ||
+        (v.socialMediaUrl|| "").toLowerCase().includes(q) ||
+        (v.email         || "").toLowerCase().includes(q)
       ) &&
       (category === "All" || v.category === category)
     );
@@ -224,7 +227,7 @@ export default function UserDashboard() {
               <input
                 value={query}
                 onChange={e => handleSearch(e.target.value)}
-                placeholder="Search by business name, @Instagram, @TikTok…"
+                placeholder="Search by business name, category, phone, @Instagram, @TikTok…"
                 autoFocus={page === "Search"}
               />
               {query && (
